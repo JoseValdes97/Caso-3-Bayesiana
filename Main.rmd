@@ -1,0 +1,42 @@
+---
+title: "Caso 3"
+author: "Joan Lamprea y José Valdés"
+date: "2023-06-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#
+suppressMessages(suppressWarnings(library(gplots)))
+#datos
+Data <- source("D:/jose/Caso3_Bayes/yX.diabetes.train.txt") # guarda una lista
+
+```
+
+# Caso 3: Análisis de diabetes
+
+## DAtos de entrenamiento
+
+```{r}
+###### datos entrnamiento
+Train_Data <- Data$value
+# dimensiones
+dim(Train_Data)
+# seleccionando las de trabajar
+Train_Data <- Train_Data[,c(1:11)]
+```
+
+### Analisis descriptivo
+
+```{r}
+# medias
+colMeans(Train_Data)
+#correlaciones
+# Calcular la matriz de correlaciones
+matriz_correlaciones <- cor(Train_Data)
+# Crear el mapa de calor
+heatmap.2(matriz_correlaciones,Colv = NA, Rowv = NA,trace = "none",
+          col = colorRampPalette(c("blue", "white", "red"))(100),
+          main = "Matriz de Correlaciones")
+```
