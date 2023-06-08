@@ -25,6 +25,8 @@ Train_Data <- Data$value
 dim(Train_Data)
 # seleccionando las de trabajar
 Train_Data <- Train_Data[,c(1:11)]
+#
+dim(Train_Data)
 ```
 
 ### Analisis descriptivo
@@ -32,6 +34,11 @@ Train_Data <- Train_Data[,c(1:11)]
 ```{r}
 # medias
 colMeans(Train_Data)
+# varianzas
+for (i in 1:11) {
+      print(var(Train_Data[,i]))
+}
+# aproximadamente 0 y varianza 1 datos estandarizados
 #correlaciones
 # Calcular la matriz de correlaciones
 matriz_correlaciones <- cor(Train_Data)
