@@ -1,3 +1,4 @@
+source("regression_gprior (1).R")
 MCMC_4 <- function(X,y,S){
       p <- ncol(X)
       BETA<-Z<-matrix(NA,S,p)
