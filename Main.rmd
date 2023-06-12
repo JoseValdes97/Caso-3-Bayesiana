@@ -46,11 +46,20 @@ heatmap.2(matriz_correlaciones,Colv = NA, Rowv = NA,trace = "none",
 ```{r Convergencia Modelo 1}
 tictoc::tic()
 set.seed(1856)
-cadena1_M1 <- MCMC_1(X,y,B = 10000)
+cadena_M1 <- MCMC_1(X,y,B = 10000)
 tictoc::toc()
 
 # Gráfico
-yrange <- range(cadena1_M1$LP)
-plot(cadena1_M1$LP, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 1")
+yrange <- range(cadena_M1$LP)
+plot(cadena_M1$LP, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 1")
 ```
+```{r Convergencia Modelo 2}
+tictoc::tic()
+set.seed(1856)
+cadena_M2 <- MCMC_2(X,y,B = 10000)
+tictoc::toc()
 
+# Gráfico
+yrange <- range(cadena_M2$LP)
+plot(cadena_M2$LP, type = "p", pch = 20, cex = 0.8, col = "red", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 2")
+```
