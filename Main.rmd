@@ -12,7 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 suppressMessages(suppressWarnings(library(gplots)))
 #datos
 Data <- source("yX.diabetes.train.txt") # guarda una lista
-
+source("Modelo_1.R")
+source("Modelo_2.R")
+source("Modelo_4.R")
 ```
 
 # Caso 3: AnÃ¡lisis de diabetes
@@ -62,4 +64,14 @@ tictoc::toc()
 # Gráfico
 yrange <- range(cadena_M2$LP)
 plot(cadena_M2$LP, type = "p", pch = 20, cex = 0.8, col = "red", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 2")
+```
+```{r Convergencia Modelo 4}
+tictoc::tic()
+set.seed(1856)
+cadena_M4 <- MCMC_4(X,y,S = 10000)
+tictoc::toc()
+
+# Gráfico
+yrange <- range(cadena_M4$LP)
+plot(cadena_M4$LP, type = "p", pch = 20, cex = 0.8, col = "greenS", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 4")
 ```
