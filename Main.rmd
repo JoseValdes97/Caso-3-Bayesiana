@@ -2,6 +2,7 @@
 title: "Caso 3"
 author: "Joan Lamprea y Jos√© Vald√©s"
 date: "2023-06-06"
+encoding: "UTF-8"
 output: html_document
 ---
 
@@ -10,13 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 #
 suppressMessages(suppressWarnings(library(gplots)))
 #datos
-Data <- source("D:/jose/Caso3_Bayes/yX.diabetes.train.txt") # guarda una lista
+Data <- source("yX.diabetes.train.txt") # guarda una lista
 
 ```
 
 # Caso 3: An√°lisis de diabetes
 
-## DAtos de entrenamiento
+## Datos de entrenamiento
 
 ```{r}
 ###### datos entrnamiento
@@ -25,8 +26,13 @@ Train_Data <- Data$value
 dim(Train_Data)
 # seleccionando las de trabajar
 Train_Data <- Train_Data[,c(1:11)]
+<<<<<<< HEAD
 #
 dim(Train_Data)
+=======
+X <- Train_Data[,c(2:11)]
+y <- Train_Data[,1]
+>>>>>>> main
 ```
 
 ### Analisis descriptivo
@@ -46,4 +52,24 @@ matriz_correlaciones <- cor(Train_Data)
 heatmap.2(matriz_correlaciones,Colv = NA, Rowv = NA,trace = "none",
           col = colorRampPalette(c("blue", "white", "red"))(100),
           main = "Matriz de Correlaciones")
+```
+```{r Convergencia Modelo 1}
+tictoc::tic()
+set.seed(1856)
+cadena_M1 <- MCMC_1(X,y,B = 10000)
+tictoc::toc()
+
+# Gr·fico
+yrange <- range(cadena_M1$LP)
+plot(cadena_M1$LP, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "IteraciÛn",ylab = "Log-verosimilitud", main = "Modelo 1")
+```
+```{r Convergencia Modelo 2}
+tictoc::tic()
+set.seed(1856)
+cadena_M2 <- MCMC_2(X,y,B = 10000)
+tictoc::toc()
+
+# Gr·fico
+yrange <- range(cadena_M2$LP)
+plot(cadena_M2$LP, type = "p", pch = 20, cex = 0.8, col = "red", ylim = yrange, xlab = "IteraciÛn",ylab = "Log-verosimilitud", main = "Modelo 2")
 ```
