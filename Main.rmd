@@ -73,5 +73,5 @@ tictoc::toc()
 
 # Gráfico
 yrange <- range(cadena_M4$LP)
-plot(cadena_M4$LP, type = "p", pch = 20, cex = 0.8, col = "greenS", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 4")
+plot(cadena_M4$LP, type = "p", pch = 20, cex = 0.8, col = "green", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 4")
 ```

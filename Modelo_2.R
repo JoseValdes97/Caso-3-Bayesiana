@@ -32,7 +32,7 @@ MCMC_2 <- function(X,y,B){
             sig2   <- sample_sig2_2(X, y, nu0, sig20, bet, p, n)
             SIG2   <- rbind(SIG2, sig2)
             BET    <- rbind(BET,  bet)
-            LP     <- rbind(LP, sum(dnorm(x = y, mean = bet, sd = sqrt(sig2), log = T)))
+            LP     <- rbind(LP, sum(dnorm(x = y, mean = X%*%bet, sd = sqrt(sig2), log = T)))
             # progreso
       }
       # retorno

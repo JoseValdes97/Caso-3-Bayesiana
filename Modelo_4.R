@@ -1,3 +1,4 @@
+source("regression_gprior.R")
 MCMC_4 <- function(X,y,S){
       p <- ncol(X)
       BETA<-Z<-matrix(NA,S,p)
@@ -20,7 +21,7 @@ MCMC_4 <- function(X,y,S){
                   }
             BETA[s,]<-beta
             SIG2[s] <-s2
-            LP     <- rbind(LP, sum(dnorm(x = y, mean = beta, sd = sqrt(s2), log = T)))
+            LP     <- rbind(LP, sum(dnorm(x = y, mean = X%*%beta, sd = sqrt(s2), log = T)))
       }
       return(list(BETA=BETA,SIG2=SIG2,LP=LP))
 }
