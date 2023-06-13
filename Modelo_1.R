@@ -18,15 +18,14 @@ MCMC_1 <- function(X,y,B){
       nu0    <- 1
       al     <- 1
       bl     <- 2
-      bet    <- solve(t(X)%*%X)%*%t(X)%*%y
-      sig20  <- sum(t(y-X%*%bet)%*%(y-X%*%bet))/(n-p)
+      bet    <- solve(t(X)%*%X)%*%t(X)%*%y # OLS
+      sig20  <- sum(t(y-X%*%bet)%*%(y-X%*%bet))/(n-p) #OLS
       set.seed(2023)
       lambda <- rgamma(n = 1, shape = al, rate = bl)
       set.seed(2023)
       sig2   <- 1/rgamma(n = 1, shape = 0.5*(nu0), rate = 0.5*(nu0*sig20))
       # Almacenamiento
       LAMBDA <- SIG2 <- BET <- LP <- NULL
-       
       # Actualizar
       set.seed(2023)
       for (b in 1:B){
