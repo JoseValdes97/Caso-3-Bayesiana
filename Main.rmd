@@ -14,6 +14,7 @@ suppressMessages(suppressWarnings(library(gplots)))
 Data <- source("yX.diabetes.train.txt") # guarda una lista
 source("Modelo_1.R")
 source("Modelo_2.R")
+source("Modelo_3.R")
 source("Modelo_4.R")
 ```
 
@@ -45,33 +46,50 @@ heatmap.2(matriz_correlaciones,Colv = NA, Rowv = NA,trace = "none",
           col = colorRampPalette(c("blue", "white", "red"))(100),
           main = "Matriz de Correlaciones")
 ```
+
 ```{r Convergencia Modelo 1}
 tictoc::tic()
 set.seed(1856)
 cadena_M1 <- MCMC_1(X,y,B = 10000)
 tictoc::toc()
 
-# Gráfico
+# Gr?fico
 yrange <- range(cadena_M1$LP)
-plot(cadena_M1$LP, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 1")
+plot(cadena_M1$LP, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteraci?n",ylab = "Log-verosimilitud", main = "Modelo 1")
 ```
+
 ```{r Convergencia Modelo 2}
 tictoc::tic()
 set.seed(1856)
 cadena_M2 <- MCMC_2(X,y,B = 10000)
 tictoc::toc()
 
-# Gráfico
+# Gr?fico
 yrange <- range(cadena_M2$LP)
-plot(cadena_M2$LP, type = "p", pch = 20, cex = 0.8, col = "red", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 2")
+plot(cadena_M2$LP, type = "p", pch = 20, cex = 0.8, col = "red", ylim = yrange, xlab = "Iteraci?n",ylab = "Log-verosimilitud", main = "Modelo 2")
 ```
+
+```{r Convergencia Modelo 3}
+tictoc::tic()
+set.seed(1856)
+cadena_M3 <- MCMC_3(X,y,B = 30000)
+tictoc::toc()
+
+# Gr?fico
+yrange <- range(cadena_M3$LP)
+plot(cadena_M3$LP, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim = yrange, xlab = "Iteraci?n",ylab = "Log-verosimilitud", main = "Modelo 3")
+```
+
 ```{r Convergencia Modelo 4}
 tictoc::tic()
 set.seed(1856)
 cadena_M4 <- MCMC_4(X,y,S = 10000)
 tictoc::toc()
 
-# Gráfico
+# Gr?fico
 yrange <- range(cadena_M4$LP)
-plot(cadena_M4$LP, type = "p", pch = 20, cex = 0.8, col = "green", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 4")
+plot(cadena_M4$LP, type = "p", pch = 20, cex = 0.8, col = "green", ylim = yrange, xlab = "Iteraci?n",ylab = "Log-verosimilitud", main = "Modelo 4")
 ```
+
+
+
