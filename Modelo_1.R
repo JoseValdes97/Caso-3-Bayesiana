@@ -36,7 +36,7 @@ MCMC_1 <- function(X,y,B){
             LAMBDA <- rbind(LAMBDA, lambda)
             SIG2   <- rbind(SIG2, sig2)
             BET    <- rbind(BET,  bet)
-            LP     <- rbind(LP, sum(dnorm(x = y, mean = bet, sd = sqrt(sig2), log = T)))
+            LP     <- rbind(LP, sum(dnorm(x = y, mean = X%*%bet, sd = sqrt(sig2), log = T)))
       # progreso
       
       }
