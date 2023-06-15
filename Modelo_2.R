@@ -1,5 +1,5 @@
 sample_bet_2 <- function(X, y, sig2, phi2, p){
-      c(mvtnorm::rmvnorm(n = 1, mean = solve((1/sig2)*t(X)%*%X+(1/phi2)*diag(1,nrow = p))%*%((1/sig2)*t(X)%*%y), sigma = solve((1/sig2)*t(X)%*%X+(1/phi2)*diag(1,nrow = p))))
+      c(mvtnorm::rmvnorm(n = 1, mean = solve((1/sig2)*t(X)%*%X+(phi2)*diag(1,nrow = p))%*%((1/sig2)*t(X)%*%y), sigma = solve((1/sig2)*t(X)%*%X+(phi2)*diag(1,nrow = p))))
 }
 
 sample_sig2_2 <- function(X, y, nu0, sig20, bet, p, n) {
