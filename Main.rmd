@@ -177,6 +177,67 @@ for (j in 1:10) {
 IC95_M4
 ```
 
+## Preguntas
+
+Primero los $\hat{y}$ para cada modelo
+```{r}
+#modelo 1
+Y_pron_m1 <- X_test%*%Beta_M1
+Y_pron_m1
+#modelo 2
+Y_pron_m2 <- X_test%*%Beta_M2
+Y_pron_m2
+#modelo 3
+Y_pron_m3 <- X_test%*%Beta_M3
+Y_pron_m3
+#modelo 4
+Y_pron_m4 <- X_test%*%Beta_M4
+Y_pron_m4
+```
+
+### Error medio absoluto
+
+```{r}
+#modelo 1
+err_abs_med_M1 <- (1/length(y_test))*sum(abs(y_test - Y_pron_m1))
+err_abs_med_M1
+#modelo 2
+err_abs_med_M2 <- (1/length(y_test))*sum(abs(y_test - Y_pron_m2))
+err_abs_med_M2
+#modelo 3
+err_abs_med_M3 <- (1/length(y_test))*sum(abs(y_test - Y_pron_m3))
+err_abs_med_M3
+#modelo 4
+err_abs_med_M4 <- (1/length(y_test))*sum(abs(y_test - Y_pron_m4))
+err_abs_med_M4
+
+```
+
+### graficos
+
+```{r}
+# graficos
+par(mfrow = c(2,2))
+plot(y_test,Y_pron_m1, ylim = c(-1.5,2))
+abline(a = 0,b = 1)
+plot(y_test,Y_pron_m2, ylim = c(-1.5,2))
+abline(a = 0,b = 1)
+plot(y_test,Y_pron_m3, ylim = c(-1.5,2))
+abline(a = 0,b = 1)
+plot(y_test,Y_pron_m4, ylim = c(-1.5,2))
+abline(a = 0,b = 1)
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
