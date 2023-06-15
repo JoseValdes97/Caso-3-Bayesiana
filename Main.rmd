@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 suppressMessages(suppressWarnings(library(gplots)))
 #datos
 Data <- source("yX.diabetes.train.txt") # guarda una lista
+Test_data <- source("yX.diabetes.test.txt")
 source("Modelo_1.R")
 source("Modelo_2.R")
 source("Modelo_3.R")
@@ -31,6 +32,14 @@ dim(Train_Data)
 Train_Data <- Train_Data[,c(1:11)]
 X <- Train_Data[,c(2:11)]
 y <- Train_Data[,1]
+###### datos prueba
+Test <- Test_data$value
+# dimensiones
+dim(Test)
+### Seleccionando las de prueba
+Test <- Test[,c(1:11)]
+X_test <- Test[,c(2:11)]
+y_test <- Test[,1]
 ```
 
 ### Analisis descriptivo
@@ -90,6 +99,84 @@ tictoc::toc()
 yrange <- range(cadena_M4$LP)
 plot(cadena_M4$LP, type = "p", pch = 20, cex = 0.8, col = "green", ylim = yrange, xlab = "Iteraci?n",ylab = "Log-verosimilitud", main = "Modelo 4")
 ```
+## Tamaño efectivo de muestra
+
+```{r}
+#modelo 1
+coda::effectiveSize(cadena_M1$BET)
+#modelo 2
+coda::effectiveSize(cadena_M2$BET)
+#modelo 3
+coda::effectiveSize(cadena_M3$BET)
+#modelo 4
+coda::effectiveSize(cadena_M4$BET)
+```
+## Error de monte carlo
+
+```{r}
+#modelo 1
+apply(X = cadena_M1$BET, MARGIN = 2, FUN = sd)/sqrt(coda::effectiveSize(cadena_M1$BET))
+#modelo 2
+apply(X = cadena_M2$BET, MARGIN = 2, FUN = sd)/sqrt(coda::effectiveSize(cadena_M2$BET))
+#modelo 3
+apply(X = cadena_M3$BET, MARGIN = 2, FUN = sd)/sqrt(coda::effectiveSize(cadena_M3$BET))
+#modelo 4
+apply(X = cadena_M4$BET, MARGIN = 2, FUN = sd)/sqrt(coda::effectiveSize(cadena_M4$BET))
+```
+
+# Beta BAyes Estimados para cada modelo
+
+```{r}
+# modelo 1
+Beta_M1 <- colMeans(cadena_M1$BET)
+Beta_M1
+# modelo 2
+Beta_M2 <- colMeans(cadena_M2$BET)
+Beta_M2
+# modelo 3
+Beta_M3 <- colMeans(cadena_M3$BET)
+Beta_M3
+# modelo 4
+Beta_M4 <- colMeans(cadena_M4$BET)
+Beta_M4
+```
+### intervalos de credibilidad
+
+```{r}
+# modelo 1
+IC95_M1 <- NULL
+for (j in 1:10) {
+      ic <-quantile(cadena_M1$BET[,j], probs = c(0.025,.5,.975))
+      IC95_M1 <- rbind(IC95_M1, c(ic))
+      
+}
+IC95_M1
+# modelo 2
+IC95_M2 <- NULL
+for (j in 1:10) {
+      ic <-quantile(cadena_M2$BET[,j], probs = c(0.025,.5,.975))
+      IC95_M2 <- rbind(IC95_M2, c(ic))
+      
+}
+IC95_M2
+# modelo 3
+IC95_M3 <- NULL
+for (j in 1:10) {
+      ic <-quantile(cadena_M3$BET[,j], probs = c(0.025,.5,.975))
+      IC95_M3 <- rbind(IC95_M3, c(ic))
+      
+}
+IC95_M3
+# modelo 4
+IC95_M4 <- NULL
+for (j in 1:10) {
+      ic <-quantile(cadena_M4$BET[,j], probs = c(0.025,.5,.975))
+      IC95_M4 <- rbind(IC95_M4, c(ic))
+      
+}
+IC95_M4
+```
+
 
 
 

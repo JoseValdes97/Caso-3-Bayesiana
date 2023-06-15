@@ -72,7 +72,7 @@ MCMC_3 <- function(X,y,B){
             }
             # almacenar y log-veorsimilitud
             if(b%%odens==0) {
-                  BET    <- rbind(BET,  bet)
+                  BET    <- rbind(BET,  t(bet))
                   SIG2   <- rbind(SIG2, sig2)
                   RHO    <- rbind(RHO,  rho)
                   LP <- rbind(LP, mvtnorm:: dmvnorm(x = y,mean = X%*%bet, sigma = sig2*Cor, log= TRUE))
