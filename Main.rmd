@@ -228,12 +228,247 @@ plot(y_test,Y_pron_m4, ylim = c(-1.5,2))
 abline(a = 0,b = 1)
 ```
 
+## Estadístico de prueba
 
+Con la matriz de diseño
 
+```{r}
+########## Modelo 1
+MEAN1 <- NULL
+SD1 <- NULL
+## muestras
+tictoc::tic()
+set.seed(1978)
+for (b in 1:10000) {
+      # remuestreo
+      y_remues <- mvtnorm::rmvnorm(n = 1, mean = X%*%cadena_M1$BET[b,],
+                       sigma = cadena_M1$SIG2[b]*diag(1,nrow=342))
+      # estadisticos
+      mean_y <- mean(y_remues)
+      sd_y <- sd(y_remues)
+      # almacenar
+      MEAN1 <- rbind(MEAN1,mean_y)
+      SD1 <- rbind(SD1, sd_y)
+       #Progreso
+      if (b%%floor(10000/10) == 0) cat(100*round(b/10000, 1), "% completado ... \n", sep = "" )
+}
+########## Modelo 2
+MEAN2 <- NULL
+SD2 <- NULL
+## muestras
+set.seed(1978)
+for (b in 1:10000) {
+      # remuestreo
+      y_remues <- mvtnorm::rmvnorm(n = 1, mean = X%*%cadena_M2$BET[b,],
+                       sigma = cadena_M2$SIG2[b]*diag(1,nrow=342))
+      # estadisticos
+      mean_y <- mean(y_remues)
+      sd_y <- sd(y_remues)
+      # almacenar
+      MEAN2 <- rbind(MEAN2,mean_y)
+      SD2 <- rbind(SD2, sd_y)
+       #Progreso
+      if (b%%floor(10000/10) == 0) cat(100*round(b/10000, 1), "% completado ... \n", sep = "" )
+}
+########## Modelo 3
+MEAN3 <- NULL
+SD3 <- NULL
+## muestras
+set.seed(1978)
+for (b in 1:10000) {
+      # remuestreo
+      Cor <- cadena_M3$RHO[b]^DY
+      y_remues <- mvtnorm::rmvnorm(n = 1, mean = X%*%cadena_M3$BET[b,],
+                       sigma = cadena_M3$SIG2[b]*Cor)
+      # estadisticos
+      mean_y <- mean(y_remues)
+      sd_y <- sd(y_remues)
+      # almacenar
+      MEAN3 <- rbind(MEAN3,mean_y)
+      SD3 <- rbind(SD3, sd_y)
+       #Progreso
+      if (b%%floor(10000/10) == 0) cat(100*round(b/10000, 1), "% completado ... \n", sep = "" )
+}
+########## Modelo 4
+MEAN4 <- NULL
+SD4 <- NULL
+## muestras
+set.seed(1978)
+for (b in 1:10000) {
+      # remuestreo
+      y_remues <- mvtnorm::rmvnorm(n = 1, mean = X%*%cadena_M4$BET[b,],
+                       sigma = cadena_M4$SIG2[b]*diag(1,nrow=342))
+      # estadisticos
+      mean_y <- mean(y_remues)
+      sd_y <- sd(y_remues)
+      # almacenar
+      MEAN4 <- rbind(MEAN4,mean_y)
+      SD4 <- rbind(SD4, sd_y)
+       #Progreso
+      if (b%%floor(10000/10) == 0) cat(100*round(b/10000, 1), "% completado ... \n", sep = "" )
+}
+tictoc::toc()
 
+## PPP para el mean
+#modelo 1
+mean(MEAN1 > mean(y))
+#modelo 2
+mean(MEAN2 > mean(y))
+#modelo 3
+mean(MEAN3 > mean(y))
+#modelo 1
+mean(MEAN4 > mean(y))
+## PPP para el sd
+#modelo 1
+mean(SD1 > sd(y))
+#modelo 2
+mean(SD2 > sd(y))
+#modelo 3
+mean(SD3 > sd(y))
+#modelo 1
+mean(SD4 > sd(y))
+```
+### Gráfico
 
+```{r}
+# Modelo 1
+plot(c(MEAN1),c(SD1))
+abline(v = mean(y_test), h = sd(y_test))
+# Modelo 2
+plot(c(MEAN2),c(SD2))
+abline(v = mean(y_test), h = sd(y_test))
+# Modelo 3
+plot(c(MEAN3),c(SD3))
+abline(v = mean(y_test), h = sd(y_test))
+# Modelo 4
+plot(c(MEAN4),c(SD4))
+abline(v = mean(y_test), h = sd(y_test))
+```
+Con la matriz de testeo
+```{r}
+########## Modelo 1
+MEAN1 <- NULL
+SD1 <- NULL
+## muestras
+tictoc::tic()
+set.seed(1978)
+for (b in 1:10000) {
+      # remuestreo
+      y_remues <- mvtnorm::rmvnorm(n = 1, mean = X_test%*%cadena_M1$BET[b,],
+                       sigma = cadena_M1$SIG2[b]*diag(1,nrow=100))
+      # estadisticos
+      mean_y <- mean(y_remues)
+      sd_y <- sd(y_remues)
+      # almacenar
+      MEAN1 <- rbind(MEAN1,mean_y)
+      SD1 <- rbind(SD1, sd_y)
+       #Progreso
+      if (b%%floor(10000/10) == 0) cat(100*round(b/10000, 1), "% completado ... \n", sep = "" )
+}
+########## Modelo 2
+MEAN2 <- NULL
+SD2 <- NULL
+## muestras
+set.seed(1978)
+for (b in 1:10000) {
+      # remuestreo
+      y_remues <- mvtnorm::rmvnorm(n = 1, mean = X_test%*%cadena_M2$BET[b,],
+                       sigma = cadena_M2$SIG2[b]*diag(1,nrow=100))
+      # estadisticos
+      mean_y <- mean(y_remues)
+      sd_y <- sd(y_remues)
+      # almacenar
+      MEAN2 <- rbind(MEAN2,mean_y)
+      SD2 <- rbind(SD2, sd_y)
+       #Progreso
+      if (b%%floor(10000/10) == 0) cat(100*round(b/10000, 1), "% completado ... \n", sep = "" )
+}
+########## Modelo 3
+MEAN3 <- NULL
+SD3 <- NULL
+## muestras
+set.seed(1978)
+for (b in 1:10000) {
+      # remuestreo
+      y_remues <- mvtnorm::rmvnorm(n = 1, mean = X_test%*%cadena_M3$BET[b,],
+                       sigma = cadena_M3$SIG2[b]*diag(1,nrow=100))
+      # estadisticos
+      mean_y <- mean(y_remues)
+      sd_y <- sd(y_remues)
+      # almacenar
+      MEAN3 <- rbind(MEAN3,mean_y)
+      SD3 <- rbind(SD3, sd_y)
+       #Progreso
+      if (b%%floor(10000/10) == 0) cat(100*round(b/10000, 1), "% completado ... \n", sep = "" )
+}
+########## Modelo 4
+MEAN4 <- NULL
+SD4 <- NULL
+## muestras
+set.seed(1978)
+for (b in 1:10000) {
+      # remuestreo
+      y_remues <- mvtnorm::rmvnorm(n = 1, mean = X_test%*%cadena_M4$BET[b,],
+                       sigma = cadena_M4$SIG2[b]*diag(1,nrow=100))
+      # estadisticos
+      mean_y <- mean(y_remues)
+      sd_y <- sd(y_remues)
+      # almacenar
+      MEAN4 <- rbind(MEAN4,mean_y)
+      SD4 <- rbind(SD4, sd_y)
+       #Progreso
+      if (b%%floor(10000/10) == 0) cat(100*round(b/10000, 1), "% completado ... \n", sep = "" )
+}
+tictoc::toc()
+## PPP para el mean
+#modelo 1
+mean(MEAN1 > mean(y_test))
+#modelo 2
+mean(MEAN2 > mean(y_test))
+#modelo 3
+mean(MEAN3 > mean(y_test))
+#modelo 1
+mean(MEAN4 > mean(y_test))
+## PPP para el sd
+#modelo 1
+mean(SD1 > sd(y_test))
+#modelo 2
+mean(SD2 > sd(y_test))
+#modelo 3
+mean(SD3 > sd(y_test))
+#modelo 1
+mean(SD4 > sd(y_test))
+```
 
+## Comparación de modelos
 
+```{r}
+# DIC M1
+lpyth_m1  <- mvtnorm:: dmvnorm(x = y,mean = X%*%Beta_M1,
+                               sigma = mean(cadena_M1$SIG2)*diag(1,nrow=342), log=                                  TRUE)
+pDIC_m1    <- 2*(lpyth_m1 - mean(as.numeric(cadena_M1$LP)))
+dic_m1     <- -2*lpyth_m1 + 2*pDIC_m1
+dic_m1
+# DIC M2
+lpyth_m2  <- mvtnorm:: dmvnorm(x = y,mean = X%*%Beta_M2,
+                               sigma = mean(cadena_M2$SIG2)*diag(1,nrow=342), log=                                  TRUE)
+pDIC_m2    <- 2*(lpyth_m2 - mean(as.numeric(cadena_M2$LP)))
+dic_m2     <- -2*lpyth_m2 + 2*pDIC_m2
+dic_m2
+# DIC M3
+Cor <- mean(cadena_M3$RHO[b])^DY
+lpyth_m3  <- mvtnorm:: dmvnorm(x = y,mean = X%*%Beta_M3,
+                               sigma = mean(cadena_M3$SIG2)*Cor, log=                                  TRUE)
+pDIC_m3   <- 2*(lpyth_m3 - mean(as.numeric(cadena_M3$LP)))
+dic_m3    <- -2*lpyth_m3 + 2*pDIC_m3
+dic_m3
+# DIC M4
+lpyth_m4  <- mvtnorm:: dmvnorm(x = y,mean = X%*%Beta_M4,
+                               sigma = mean(cadena_M4$SIG2)*diag(1,nrow=342), log=                                  TRUE)
+pDIC_m4   <- 2*(lpyth_m4 - mean(as.numeric(cadena_M4$LP)))
+dic_m4    <- -2*lpyth_m4 + 2*pDIC_m4
+dic_m4
+```
 
 
 
