@@ -151,6 +151,12 @@ for (j in 1:10) {
       
 }
 IC95_M1
+colnames(IC95_M1) <- c("Q_2.5%","Media","Q_97.5%")
+rownames(IC95_M1) <- c(expression(Beta_1),expression(Beta_2),expression(Beta_3),
+                       expression(Beta_4),expression(Beta_5),expression(Beta_6),
+                       expression(Beta_7),expression(Beta_8),expression(Beta_9),
+                       expression(Beta_10))
+knitr::kable(x = IC95_M1, digits = 3, align = "c")
 # modelo 2
 IC95_M2 <- NULL
 for (j in 1:10) {
@@ -159,6 +165,12 @@ for (j in 1:10) {
       
 }
 IC95_M2
+colnames(IC95_M2) <- c("Q_2.5%","Media","Q_97.5%")
+rownames(IC95_M2) <- c(expression(Beta_1),expression(Beta_2),expression(Beta_3),
+                       expression(Beta_4),expression(Beta_5),expression(Beta_6),
+                       expression(Beta_7),expression(Beta_8),expression(Beta_9),
+                       expression(Beta_10))
+knitr::kable(x = IC95_M2, digits = 3, align = "c")
 # modelo 3
 IC95_M3 <- NULL
 for (j in 1:10) {
@@ -167,6 +179,12 @@ for (j in 1:10) {
       
 }
 IC95_M3
+colnames(IC95_M3) <- c("Q_2.5%","Media","Q_97.5%")
+rownames(IC95_M3) <- c(expression(Beta_1),expression(Beta_2),expression(Beta_3),
+                       expression(Beta_4),expression(Beta_5),expression(Beta_6),
+                       expression(Beta_7),expression(Beta_8),expression(Beta_9),
+                       expression(Beta_10))
+knitr::kable(x = IC95_M3, digits = 3, align = "c")
 # modelo 4
 IC95_M4 <- NULL
 for (j in 1:10) {
@@ -175,6 +193,12 @@ for (j in 1:10) {
       
 }
 IC95_M4
+colnames(IC95_M4) <- c("Q_2.5%","Media","Q_97.5%")
+rownames(IC95_M4) <- c(expression(Beta_1),expression(Beta_2),expression(Beta_3),
+                       expression(Beta_4),expression(Beta_5),expression(Beta_6),
+                       expression(Beta_7),expression(Beta_8),expression(Beta_9),
+                       expression(Beta_10))
+knitr::kable(x = IC95_M4, digits = 3, align = "c")
 ```
 
 ## Preguntas
@@ -468,6 +492,12 @@ lpyth_m4  <- mvtnorm:: dmvnorm(x = y,mean = X%*%Beta_M4,
 pDIC_m4   <- 2*(lpyth_m4 - mean(as.numeric(cadena_M4$LP)))
 dic_m4    <- -2*lpyth_m4 + 2*pDIC_m4
 dic_m4
+##
+tab <- matrix(c(dic_m1,  dic_m2,  dic_m3, dic_m4,
+                pDIC_m1, pDIC_m2, pDIC_m3,pDIC_m4),nrow = 2, ncol = 4, byrow=T)
+colnames(tab) <- c("Modelo 1", "Modelo 2", "Modelo 3", "Modelo 4")
+rownames(tab) <- c("DIC","p_DIC")
+knitr::kable(x = tab, digits = 3, align = "c")
 ```
 
 
